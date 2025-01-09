@@ -1,1 +1,1 @@
-packages = ["azure.data.tables","meraki"]
+packages = ["meraki"]

@@ -1,65 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azure Table Reader</title>
-    <script>
-        // Replace with your storage account name and access key
-        const storageAccountName = "icemerakistorage";
-        const tableName = "CuringChamber";
-        const accessKey = "MJJsNplOmuM8jZH4sy2jygOXWqKzdBxzdnXxr//vHv329zKDBsruAcDBn2ykCmkdko4HjRFH5Hm3+ASttNIYSw==";
-
-        async function fetchDataFromAzureTable() {
-            const url = `https://${storageAccountName}.table.core.windows.net/${tableName}()`;
-            const currentDate = new Date().toUTCString();
-
-            // Construct the signature string for the Shared Key Authorization
-            const stringToSign = `GET\n\n\n\n\n\n\n\n\n\n\n\nx-ms-date:${currentDate}\nx-ms-version:2019-02-02\n/${storageAccountName}/${tableName}`;
-            const sharedKey = btoa(accessKey);
-            const hmac = CryptoJS.HmacSHA256(stringToSign, CryptoJS.enc.Base64.parse(sharedKey));
-            const signature = CryptoJS.enc.Base64.stringify(hmac);
-
-            const authHeader = `SharedKeyLite ${storageAccountName}:${signature}`;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': authHeader,
-                        'x-ms-date': currentDate,
-                        'x-ms-version': '2019-02-02',
-                        'Accept': 'application/json;odata=nometadata',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error fetching data: ${response.status} ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                renderData(data.value);
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to fetch data. Check console for details.');
-            }
-        }
-
-        function renderData(items) {
-            const output = document.getElementById('output');
-            output.innerHTML = ''; // Clear previous data
-            items.forEach(item => {
-                const div = document.createElement('div');
-                div.textContent = JSON.stringify(item, null, 2);
-                output.appendChild(div);
-            });
-        }
+    <link rel="stylesheet"
+    href="https://pyscript.net/releases/2023.11.2/core.css" />
+    <script type="module"
+    src="https://pyscript.net/releases/2023.11.2/core.js">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-    <h1>Azure Table Storage Reader</h1>
-    <button onclick="fetchDataFromAzureTable()">Fetch Data</button>
-    <div id="output" style="white-space: pre-wrap; margin-top: 20px;"></div>
+    <script type="py" terminal>
+        from pyscript import display
+        display("Hello World!")
+        print("Hello terminal!")
+    </script>
 </body>
 </html>
